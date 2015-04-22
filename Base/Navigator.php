@@ -17,7 +17,8 @@ class Navigator
 
     public function test(&$url, $current_url)
     {
-        // Choose urls to follow ... override this method
+        // Choose urls to follow ... override this method.
+        // You may alter $url to take shortcuts for example.
         return TRUE;
     }
 }

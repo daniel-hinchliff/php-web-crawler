@@ -13,6 +13,7 @@ class Processor
 
     protected function doProcess($content, $current_url)
     {
-        // Do something .... override this method
+        // Here is where you extract useful data.
+        // Override this method.
     }
 }
