@@ -8,7 +8,7 @@ class UrlsDatabaseQueue implements UrlsQueue
     const stateQueued = 'Q';
     const stateProcessed = 'P';
 
-    public function  __construct(PDO $pdo, $crawl_id, $urls = array())
+    public function __construct(PDO $pdo, $crawl_id, $urls = array())
     {
         $this->pdo = $pdo;
         $this->crawl_id = $crawl_id;

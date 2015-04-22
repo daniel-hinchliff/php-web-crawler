@@ -5,7 +5,7 @@ class UrlsMemoryQueue implements UrlsQueue
     protected $queue;
     protected $log;
 
-    public function  __construct($urls = array())
+    public function __construct($urls = array())
     {
         $this->queue = $urls;
         $this->log = array();
