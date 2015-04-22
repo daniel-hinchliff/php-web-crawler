@@ -12,8 +12,7 @@ class UrlExtractor
         
         $path = $site . $parse['path'];
 
-        preg_match_all ("/a[\s]+[^>]*?href[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
-                        $content, $links);
+        preg_match_all ("/a[\s]+[^>]*?href[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/", $content, $links);
 
         $links = $links[1];
 
