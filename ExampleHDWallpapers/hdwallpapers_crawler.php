@@ -14,11 +14,9 @@ for ($i=1; $i <= 20; $i++)
 }
 
 $crawler = new Crawler();
-$crawler->queue = new UrlsMemoryQueue($urls);
-$crawler->fetcher = new Fetcher();
-$crawler->processor = new HDWallpapersProcessor();
-$crawler->url_extractor = new UrlExtractor();
-$crawler->navigator = new HDWallpapersNavigator();
+$crawler->setQueue(new UrlsMemoryQueue($urls));
+$crawler->setProcessor(new HDWallpapersProcessor());
+$crawler->setNavigator(new HDWallpapersNavigator());
 $crawler->crawl(5);
 
 

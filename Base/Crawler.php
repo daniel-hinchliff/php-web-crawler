@@ -12,11 +12,12 @@ include 'UrlExtractor.php';
 
 class Crawler
 {
-    public $queue;
-    public $fetcher;
-    public $processor;
-    public $url_extractor;
-    public $navigator;
+    protected $queue;
+    protected $logger;
+    protected $fetcher;
+    protected $processor;
+    protected $navigator;
+    protected $url_extractor;
 
     public function crawl($pace)
     {
@@ -29,5 +30,35 @@ class Crawler
 
         // Start crawl
         $this->fetcher->fetch($pace);
+    }
+
+    public function setQueue($queue)
+    {
+        $this->queue = $queue;
+    }
+
+    public function setFetcher($fetcher)
+    {
+        $this->fetcher = $fetcher;
+    }
+
+    public function setProcessor($processor)
+    {
+        $this->processor = $processor;
+    }
+
+    public function setUrlExtractor($url_extractor)
+    {
+        $this->url_extractor = $url_extractor;
+    }
+
+    public function setNavigator($navigator)
+    {
+        $this->navigator = $navigator;
+    }
+
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
     }
 }
