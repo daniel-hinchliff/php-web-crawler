@@ -1,5 +1,8 @@
 <?php
 
+define('LisingPagePattern', "/^http:\/\/(www\.)?hdwallpapers\.in\/(top|latest).*\/page\//");
+define('WallpaperPagePattern', "/^http:\/\/(www\.)?hdwallpapers\.in\/[^-]*-wallpapers.html/");
+
 include '../Base/Crawler.php';
 include 'hdwallpapers_navigator.php';
 include 'hdwallpapers_processor.php';

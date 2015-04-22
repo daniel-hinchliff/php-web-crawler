@@ -2,16 +2,18 @@
 
 class HDWallpapersNavigator extends Navigator
 {
+    public function isListingPage($url)
+    {
+        return preg_match(LisingPagePattern, $url);
+    }
+
+    public function isWallpaperPage($url)
+    {
+        return preg_match(WallpaperPagePattern, $url);
+    }
+
     public function test(&$url, $current_url)
     {
-        // Only follow links on listing pages
-        if (preg_match("/^http:\/\/(www\.)?hdwallpapers\.in\/(top|latest).*\/page\//", $current_url) == 1)
-        {
-            // Only follow links to wallpapers
-            if (preg_match("/^http:\/\/(www\.)?hdwallpapers\.in\/[^-]*-wallpapers.html/", $url) == 1)
-                return TRUE;
-        }
-
-        return FALSE;
+        return $this->isListingPage($current_url) && $this->isWallpaperPage($url);
     }
 }
