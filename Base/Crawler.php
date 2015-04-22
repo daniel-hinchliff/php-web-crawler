@@ -30,7 +30,6 @@ class Crawler
         }
     }
 
-
     protected function sleep($seconds)
     {
         for($i = 0; $i < $seconds; $i++)
