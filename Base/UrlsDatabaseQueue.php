@@ -32,7 +32,7 @@ class UrlsDatabaseQueue implements UrlsQueue
 
     public function addUrl($url)
     {
-        $sql = "INSERT INTO urls (url, crawl_id, state, date) VALUES (?, ?, ?, now())";
+        $sql = "INSERT IGNORE INTO urls (url, crawl_id, state, date) VALUES (?, ?, ?, now())";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(array($url, $this->crawl_id, self::stateQueued));
     }
