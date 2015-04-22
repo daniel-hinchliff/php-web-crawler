@@ -21,15 +21,53 @@ class Crawler
 
     public function crawl($pace)
     {
-        // Hook up components
-        $this->fetcher->queue = $this->queue;
-        $this->fetcher->processor = $this->processor;
-        $this->processor->url_extractor = $this->url_extractor;
-        $this->url_extractor->navigator = $this->navigator;
-        $this->navigator->queue = $this->queue;
+        $this->initialize();
+        
+        while ($url = $this->queue->getUrl())
+        {
+            $this->processUrl($url);
+            $this->sleep($pace);
+        }
+    }
 
-        // Start crawl
-        $this->fetcher->fetch($pace);
+
+    protected function sleep($seconds)
+    {
+        for($i = 0; $i < $seconds; $i++)
+        {
+            echo '. '; sleep(1);
+        }
+
+        echo "\n";
+    }
+    
+    protected function initialize()
+    {
+        $this->fetcher = $this->fetcher ?: new Fetcher();
+        $this->queue = $this->queue ?: new UrlsMemoryQueue();
+        $this->navigator = $this->navigator ?: new Navigator();
+        $this->processor = $this->processor ?: new Processor();
+        $this->url_extractor = $this->url_extractor ?: new UrlExtractor;
+    }
+
+    protected function processUrl($url)
+    {
+        $content = $this->fetcher->fetch($url);
+        $this->logger && $this->logger->log($url, $content);
+        $this->processContent($url, $content);
+        $this->queue->processedUrl($url);
+    }
+
+    protected function processContent($url, $content)
+    {
+        $this->processor->filter($url) &&
+        $this->processor->process($content, $url);
+        $urls = $this->url_extractor->extract($content, $url);
+
+        foreach ($this->navigator->filter($urls, $url) as $passed_url)
+        {
+            $this->queue->addUrl($passed_url);
+        }
     }
 
     public function setQueue($queue)

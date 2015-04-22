@@ -2,16 +2,14 @@
 
 class Processor
 {
-    public $url_extractor;
-
-    public function process($content, $current_url)
+    public function filter($url)
     {
-        $this->url_extractor->extract($content, $current_url);
-
-        $this->doProcess($content, $current_url);
+        // Decide whether to extract data from this page or not
+        // Override this method.
+        return TRUE;
     }
 
-    protected function doProcess($content, $current_url)
+    public function process($content, $current_url)
     {
         // Here is where you extract useful data.
         // Override this method.

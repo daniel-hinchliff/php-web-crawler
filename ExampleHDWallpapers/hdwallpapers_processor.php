@@ -2,12 +2,13 @@
 
 class HDWallpapersProcessor extends Processor
 {
-    public function doProcess($content, $current_url)
+    public function filter($url)
     {
-        if (preg_match("/^http:\/\/(www\.)?hdwallpapers\.in\/.*-wallpapers.html/", $current_url) != 1)
-            return;
-        
+        return preg_match(WallpaperPagePattern, $url);
+    }
 
+    public function process($content, $current_url)
+    {
         $wp = new Wallpaper();
         
         $wp->page = $current_url;

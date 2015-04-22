@@ -34,6 +34,6 @@ class UrlExtractor
             }
         }
 
-        $this->navigator->filter($urls, $current_url);
+        return $urls;
     }
 }

@@ -2,17 +2,19 @@
 
 class Navigator
 {
-    public $queue;
-
     public function filter($urls, $current_url)
     {
+        $passed = array();
+
         foreach($urls as $url)
         {
             if ($this->test($url, $current_url))
             {
-                $this->queue->addUrl($url);
+                $passed[]= $url;
             }
         }
+
+        return $passed;
     }
 
     public function test(&$url, $current_url)
