@@ -2,8 +2,6 @@
 
 class UrlExtractor
 {
-    public $navigator;
-
     public function extract($content, $current_url)
     {
         $parse = parse_url($current_url);
