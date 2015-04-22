@@ -7,10 +7,10 @@ class HDWallpapersProcessor extends Processor
         if (preg_match("/^http:\/\/(www\.)?hdwallpapers\.in\/.*-wallpapers.html/", $current_url) != 1)
             return;
         
-        // Extract wallpaper info
 
         $wp = new Wallpaper();
-        $wp->page= $current_url;
+        
+        $wp->page = $current_url;
 
         if (preg_match("/<h1.*>(.*)<\/h1>/", $content, $matches) == 1)
             $wp->title = $matches[1];
@@ -25,16 +25,10 @@ class HDWallpapersProcessor extends Processor
             $wp->source = $matches[2] . " - " . $matches[1];
 
         if (preg_match("/^http:\/\/(www\.)?hdwallpapers\.in\/(.*)-wallpapers.html/", $current_url, $matches) == 1)
-        {
             $wp->filename = "hdwallpapers_" . $matches[2] . ".jpg";
-        }
-
-        // Retrieve and store wallpaper
 
         if ($wp->filename != null and $wp->url != null)
-        {
             $wp->download();
-        }
     }
 }
 
