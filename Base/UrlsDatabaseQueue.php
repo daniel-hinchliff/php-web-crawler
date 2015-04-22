@@ -44,7 +44,7 @@ class UrlsDatabaseQueue implements UrlsQueue
         $stmt->execute(array(self::stateProcessed, $this->crawl_id, $url));
     }
 
-    public function createQueue()
+    protected function createQueue()
     {
         $sql = "CREATE TABLE IF NOT EXISTS `urls` (
                 `crawl_id` varchar(20) NOT NULL,
