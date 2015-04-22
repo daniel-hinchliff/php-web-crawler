@@ -4,12 +4,12 @@ define ('CRAWLER_LOG_DIR', 'D:/logs/scrapers');
 
 class Fetcher
 {
-    public $feeder;
+    public $queue;
     public $processor;
 
     public function fetch($pace)
     {
-        $url = $this->feeder->getUrl();
+        $url = $this->queue->getUrl();
 
         while ($url != null)
         {
@@ -24,7 +24,7 @@ class Fetcher
                 $this->processor->process($content, $url);
             }
             
-            $this->feeder->processedUrl($url);
+            $this->queue->processedUrl($url);
 
             for($i = 0; $i < $pace; $i++)
             {
@@ -33,7 +33,7 @@ class Fetcher
             
             echo "\n";
 
-            $url = $this->feeder->getUrl();
+            $url = $this->queue->getUrl();
         }
     }
     

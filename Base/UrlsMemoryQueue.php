@@ -2,8 +2,8 @@
 
 class UrlsMemoryQueue implements UrlsQueue
 {
-    private $queue;
-    private $log;
+    protected $queue;
+    protected $log;
 
     public function  __construct($urls = array())
     {
@@ -18,7 +18,7 @@ class UrlsMemoryQueue implements UrlsQueue
     
     public function addUrl($url)
     {
-        if(in_array($url, $this->log) == FALSE)
+        if(in_array($url, $this->log) == false)
         {
             $this->queue[] = $url;
         }

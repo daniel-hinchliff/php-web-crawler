@@ -2,30 +2,59 @@
 
 class UrlsDatabaseQueue implements UrlsQueue
 {
-    private $crawl_id;
+    protected $pdo;
+    protected $crawl_id;
 
-    public function  __construct($crawl_id, $urls = array())
+    const stateQueued = 'Q';
+    const stateProcessed = 'P';
+
+    public function  __construct(PDO $pdo, $crawl_id, $urls = array())
     {
+        $this->pdo = $pdo;
         $this->crawl_id = $crawl_id;
 
+        $this->createQueue();
+        
         foreach ($urls as $url)
         {
-            Url::saveUrl($url, $crawl_id);
+            $this->addUrl($url);
         }
     }
 
     public function getUrl()
     {
-        return Url::getPendingUrl($this->crawl_id);
+        $sql = "SELECT url FROM urls WHERE state = ? AND crawl_id = ? LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(array(self::stateQueued, $this->crawl_id));
+
+        return $stmt->fetchColumn() ?: null;
     }
 
     public function addUrl($url)
     {
-        Url::saveUrl($url, $this->crawl_id);
+        $sql = "INSERT INTO urls (url, crawl_id, state, date) VALUES (?, ?, ?, now())";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(array($url, $this->crawl_id, self::stateQueued));
     }
 
     public function processedUrl($url)
     {
-        Url::updateUrlState($this->crawl_id, $url, 'C');
+        $sql = "UPDATE urls SET state = ? WHERE crawl_id = ? AND url = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(array(self::stateProcessed, $this->crawl_id, $url));
+    }
+
+    public function createQueue()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS `urls` (
+                `crawl_id` varchar(20) NOT NULL,
+                `url` varchar(500) NOT NULL,
+                `state` char(1) NOT NULL,
+                `date` datetime NOT NULL,
+                KEY (`crawl_id`,`state`),
+                PRIMARY KEY (`url`)
+              )";
+
+        $this->pdo->prepare($sql)->execute();
     }
 }

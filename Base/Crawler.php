@@ -1,6 +1,5 @@
 <?php
 
-include 'Url.php';
 include 'UrlsQueue.php';
 include 'UrlsMemoryQueue.php';
 include 'UrlsDatabaseQueue.php';
@@ -11,7 +10,7 @@ include 'UrlExtractor.php';
 
 class Crawler
 {
-    public $feeder;
+    public $queue;
     public $fetcher;
     public $processor;
     public $url_extractor;
@@ -20,11 +19,11 @@ class Crawler
     public function crawl($pace)
     {
         // Hook up components
-        $this->fetcher->feeder = $this->feeder;
+        $this->fetcher->queue = $this->queue;
         $this->fetcher->processor = $this->processor;
         $this->processor->url_extractor = $this->url_extractor;
         $this->url_extractor->navigator = $this->navigator;
-        $this->navigator->feeder = $this->feeder;
+        $this->navigator->queue = $this->queue;
 
         // Start crawl
         $this->fetcher->fetch($pace);

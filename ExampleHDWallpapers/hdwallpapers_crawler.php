@@ -1,6 +1,6 @@
 <?php
 
-include '../Base/crawler.php';
+include '../Base/Crawler.php';
 include 'hdwallpapers_navigator.php';
 include 'hdwallpapers_processor.php';
 include 'wallpaper.php';
@@ -14,7 +14,7 @@ for ($i=1; $i <= 20; $i++)
 }
 
 $crawler = new Crawler();
-$crawler->feeder = new UrlsMemoryQueue($urls);
+$crawler->queue = new UrlsMemoryQueue($urls);
 $crawler->fetcher = new Fetcher();
 $crawler->processor = new HDWallpapersProcessor();
 $crawler->url_extractor = new UrlExtractor();

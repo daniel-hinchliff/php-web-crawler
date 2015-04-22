@@ -2,7 +2,7 @@
 
 class Navigator
 {
-    public $feeder;
+    public $queue;
 
     public function filter($urls, $current_url)
     {
@@ -10,7 +10,7 @@ class Navigator
         {
             if ($this->test($url, $current_url))
             {
-                $this->feeder->addUrl($url);
+                $this->queue->addUrl($url);
             }
         }
     }
