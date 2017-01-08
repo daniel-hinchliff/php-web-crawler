@@ -3,7 +3,7 @@
 use Crawler\Crawler;
 use Crawler\UrlsMemoryQueue;
 
-class ProcessorFilterTest extends PHPUnit_Framework_TestCase
+class CrawlerProcessFilterTest extends PHPUnit_Framework_TestCase
 {
     private $prophet;
 
