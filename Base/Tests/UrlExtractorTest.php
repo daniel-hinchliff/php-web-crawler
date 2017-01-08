@@ -4,68 +4,83 @@ use Crawler\UrlExtractor;
 
 class UrlExtractorTest extends PHPUnit_Framework_TestCase
 {
-    const urlRoot = 'http://url.com';
-    const urlNotRoot = 'http://url.com/some/path';
-    const noLinksContent = 'This is some text';
-    const multipleLinksContent = '<a href="a">a</a> <a href="b">b</a>';
-    const repeatedLinksContent = '<a href="a">a</a> <a href="a">b</a>';
-    const relativeLinksContent = '<a href="web/page">a</a>';
-    const rootRelativeLinksContent = '<a href="/web/page">a</a>';
-    const absoluteLinksContent = '<a href="http://web.com">a</a>';
-
     public function testNoLinks()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::noLinksContent, self::urlRoot);
+        $links = [];
+        $urls = $this->getUrlsFromPage('http://url.com', $links);
         $this->assertEmpty($urls);
     }
 
     public function testMultipleLinks()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::multipleLinksContent, self::urlRoot);
+        $links = ['link_1', 'link_2'];
+        $urls = $this->getUrlsFromPage('http://url.com', $links);
         $this->assertEquals(2, count($urls));
     }
 
     public function testLinksAreUnique()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::repeatedLinksContent, self::urlRoot);
+        $links = ['link', 'link'];
+        $urls = $this->getUrlsFromPage('http://url.com', $links);
         $this->assertEquals(1, count($urls));
     }
 
-    public function testRootRelativeLinksAtRoot()
+    public function testStartWithSlashRelativeLinksAtRoot()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::rootRelativeLinksContent, self::urlRoot);
+        $links = ['/web/page'];
+        $urls = $this->getUrlsFromPage('http://url.com', $links);
         $this->assertEquals(['http://url.com/web/page'], $urls);
     }
 
-    public function testRootRelativeLinksNotAtRoot()
+    public function testStartWithSlashRelativeLinksNotAtRoot()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::rootRelativeLinksContent, self::urlNotRoot);
+        $links = ['/web/page'];
+        $urls = $this->getUrlsFromPage('http://url.com/some/path', $links);
         $this->assertEquals(['http://url.com/web/page'], $urls);
     }
 
     public function testRelativeLinksAtRoot()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::relativeLinksContent, self::urlRoot);
+        $links = ['web/page'];
+        $urls = $this->getUrlsFromPage('http://url.com', $links);
         $this->assertEquals(['http://url.com/web/page'], $urls);
     }
 
     public function testRelativeLinksNotAtRoot()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::relativeLinksContent, self::urlNotRoot);
+        $links = ['web/page'];
+        $urls = $this->getUrlsFromPage('http://url.com/some/path', $links);
         $this->assertEquals(['http://url.com/some/web/page'], $urls);
+    }
+
+    public function testRelativeLinksNotAtRootUrlEndsWithSlash()
+    {
+        $links = ['web/page'];
+        $urls = $this->getUrlsFromPage('http://url.com/some/path/', $links);
+        $this->assertEquals(['http://url.com/some/path/web/page'], $urls);
     }
 
     public function testAbsoluteLinks()
     {
-        $extractor = new UrlExtractor();
-        $urls = $extractor->extract(self::absoluteLinksContent, self::urlRoot);
+        $links = ['http://web.com'];
+        $urls = $this->getUrlsFromPage('http://url.com/some/path', $links);
         $this->assertEquals(['http://web.com'], $urls);
+    }
+
+    protected function getUrlsFromPage($url, $links)
+    {
+        return (new UrlExtractor())->extract($this->getContent($links), $url);
+    }
+
+    protected function getContent($links)
+    {
+        $html_links = '';
+
+        foreach ($links as $link)
+        {
+            $html_links .= "<a href='$link'>text</a>";
+        }
+
+        return $html_links;
     }
 }
