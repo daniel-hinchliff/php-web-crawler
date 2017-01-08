@@ -6,7 +6,7 @@ class UrlExtractor
 {
     public function extract($content, $current_url)
     {
-        $parse = parse_url($current_url);
+        $parse = parse_url($current_url) + ['path' => ''];
 
         $site = $parse['scheme'] . "://" . $parse['host'];
         
