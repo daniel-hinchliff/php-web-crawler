@@ -11,6 +11,7 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
     const repeatedLinksContent = '<a href="a">a</a> <a href="a">b</a>';
     const relativeLinksContent = '<a href="web/page">a</a>';
     const rootRelativeLinksContent = '<a href="/web/page">a</a>';
+    const absoluteLinksContent = '<a href="http://web.com">a</a>';
 
     public function testNoLinks()
     {
@@ -59,5 +60,12 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
         $extractor = new UrlExtractor();
         $urls = $extractor->extract(self::relativeLinksContent, self::urlNotRoot);
         $this->assertEquals(['http://url.com/some/web/page'], $urls);
+    }
+
+    public function testAbsoluteLinks()
+    {
+        $extractor = new UrlExtractor();
+        $urls = $extractor->extract(self::absoluteLinksContent, self::urlRoot);
+        $this->assertEquals(['http://web.com'], $urls);
     }
 }
