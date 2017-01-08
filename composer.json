@@ -8,7 +8,7 @@
   "autoload": {
     "psr-4": {
       "Crawler\\": "Base",
-      "HDWallpapers\\": "ExampleHDWallpapers"
+      "HDWallpapers\\": "Examples\\Wallpapers"
     }
   }
 }

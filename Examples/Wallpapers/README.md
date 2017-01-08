@@ -4,4 +4,4 @@ You are not allowed to scrape www.hdwallpapers.in unless you have their authoriz
 
 To run:
 
-php hdwallpapers_crawler.php
+php crawler.php
