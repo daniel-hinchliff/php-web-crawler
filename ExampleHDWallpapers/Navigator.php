@@ -1,6 +1,8 @@
 <?php
 
-class HDWallpapersNavigator extends Navigator
+namespace HDWallpapers;
+
+class Navigator extends \Crawler\Navigator
 {
     public function test(&$url, $current_url)
     {

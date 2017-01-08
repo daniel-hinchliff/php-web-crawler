@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class Navigator
 {
     public function filter($urls, $current_url)

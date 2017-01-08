@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class UrlsMemoryQueue implements UrlsQueue
 {
     protected $queue;

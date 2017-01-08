@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class Logger
 {
     protected $directory;

@@ -1,4 +1,10 @@
 {
   "name": "daniel-hinchliff/php_web_crawler",
-  "description": "A simple web crawling framework"
+  "description": "A simple web crawling framework",
+  "autoload": {
+    "psr-4": {
+      "Crawler\\": "Base",
+      "HDWallpapers\\": "ExampleHDWallpapers"
+    }
+  }
 }

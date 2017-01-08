@@ -1,14 +1,6 @@
 <?php
 
-include 'Logger.php';
-include 'UrlsQueue.php';
-include 'UrlsMemoryQueue.php';
-include 'UrlsDatabaseQueue.php';
-include 'Fetcher.php';
-include 'SeleniumFetcher.php';
-include 'Processor.php';
-include 'Navigator.php';
-include 'UrlExtractor.php';
+namespace Crawler;
 
 class Crawler
 {

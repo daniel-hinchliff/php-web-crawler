@@ -1,5 +1,7 @@
 <?php
 
+namespace HDWallpapers;
+
 class Wallpaper
 {
     public $title;

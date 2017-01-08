@@ -1,6 +1,8 @@
 <?php
 
-class HDWallpapersProcessor extends Processor
+namespace HDWallpapers;
+
+class Processor extends \Crawler\Processor
 {
     public function filter($url)
     {

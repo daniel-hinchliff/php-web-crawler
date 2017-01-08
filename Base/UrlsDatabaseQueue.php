@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class UrlsDatabaseQueue implements UrlsQueue
 {
     protected $pdo;

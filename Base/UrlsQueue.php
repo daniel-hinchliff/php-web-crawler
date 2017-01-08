@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 interface UrlsQueue
 {
     public function getUrl();

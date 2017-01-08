@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class Fetcher
 {
     public function fetch($url)

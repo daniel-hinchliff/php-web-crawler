@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class UrlExtractor
 {
     public function extract($content, $current_url)

@@ -1,5 +1,7 @@
 <?php
 
+namespace Crawler;
+
 class Processor
 {
     public function filter($url)
