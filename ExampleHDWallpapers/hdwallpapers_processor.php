@@ -16,7 +16,7 @@ class HDWallpapersProcessor extends Processor
         if (preg_match("/<h1.*>(.*)<\/h1>/", $content, $matches) == 1)
             $wp->title = $matches[1];
 
-        if (preg_match("/href=\"([^\"]*)\" [^>]*>Original<\/a>/", $content, $matches) == 1)
+        if (preg_match("/href=\"([^\"]*)\" [^>]*><b>Original<\/b><\/a>/", $content, $matches) == 1)
             $wp->url = "http://hdwallpapers.in" . $matches[1];
 
         if (preg_match_all("/href=\"\/tag\/[^\"]*\" [^>]*>([^<]*)<\/a>/", $content, $matches) > 0)
