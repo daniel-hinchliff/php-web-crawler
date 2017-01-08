@@ -10,7 +10,7 @@ class NavigatorFilterTest extends PHPUnit_Framework_TestCase
     const urlPass = 'http://url.com/pass';
     const urlFail = 'http://url.com/fail';
 
-    public function testProcessInvokedIfPageNotFiltered()
+    public function testAddToQueueInvokedIfUrlNotFiltered()
     {
         $queue = $this->prophet->prophesize('Crawler\UrlsMemoryQueue');
         $fetcher = $this->prophet->prophesize('Crawler\Fetcher');
@@ -21,6 +21,26 @@ class NavigatorFilterTest extends PHPUnit_Framework_TestCase
         $queue->getUrl()->willReturn(self::url, null);
 
         $crawler = new Crawler();
+        $crawler->setFetcher($fetcher->reveal());
+        $crawler->setQueue($queue->reveal());
+        $crawler->crawl(0);
+    }
+
+    public function testAddToQueueNotInvokedIfUrlFiltered()
+    {
+        $queue = $this->prophet->prophesize('Crawler\UrlsMemoryQueue');
+        $navigator = $this->prophet->prophesize('Crawler\Navigator');
+        $fetcher = $this->prophet->prophesize('Crawler\Fetcher');
+
+        $queue->willBeConstructedWith([self::url]);
+        $fetcher->fetch(self::url)->willReturn('<a href="fail">link</a>');
+        $navigator->filter([self::urlFail], self::url)->willReturn([]);
+        $queue->addUrl(self::urlFail)->shouldNotBeCalled();
+        $queue->processedUrl(self::url)->shouldBeCalled();
+        $queue->getUrl()->willReturn(self::url, null);
+
+        $crawler = new Crawler();
+        $crawler->setNavigator($navigator->reveal());
         $crawler->setFetcher($fetcher->reveal());
         $crawler->setQueue($queue->reveal());
         $crawler->crawl(0);
