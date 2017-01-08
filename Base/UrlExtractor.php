@@ -34,6 +34,6 @@ class UrlExtractor
             }
         }
 
-        return $urls;
+        return array_unique($urls);
     }
 }

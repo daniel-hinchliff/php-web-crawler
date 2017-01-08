@@ -8,6 +8,7 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
     const urlNotRoot = 'http://url.com/path';
     const noLinksContent = 'This is some text';
     const multipleLinksContent = '<a href="a">a</a> <a href="b">b</a>';
+    const repeatedLinksContent = '<a href="a">a</a> <a href="a">b</a>';
 
     public function testNoLinks()
     {
@@ -21,5 +22,12 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
         $extractor = new UrlExtractor();
         $urls = $extractor->extract(self::multipleLinksContent, self::urlRoot);
         $this->assertEquals(2, count($urls));
+    }
+
+    public function testLinksAreUnique()
+    {
+        $extractor = new UrlExtractor();
+        $urls = $extractor->extract(self::repeatedLinksContent, self::urlRoot);
+        $this->assertEquals(1, count($urls));
     }
 }
