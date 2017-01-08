@@ -8,7 +8,16 @@ class Fetcher
     {
         echo "Fetching ", $url, "\n";
 
-        return @file_get_contents($url);
+        $content = @file_get_contents($url);
+
+        $content !== false or $this->error($url);
+
+        return $content;
+    }
+
+    protected function error($url)
+    {
+        throw new \Exception("Could not fetch [$url]");
     }
 }
 
