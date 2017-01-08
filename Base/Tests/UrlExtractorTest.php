@@ -5,7 +5,7 @@ use Crawler\UrlExtractor;
 class UrlExtractorTest extends PHPUnit_Framework_TestCase
 {
     const urlRoot = 'http://url.com';
-    const urlNotRoot = 'http://url.com/path';
+    const urlNotRoot = 'http://url.com/some/path';
     const noLinksContent = 'This is some text';
     const multipleLinksContent = '<a href="a">a</a> <a href="b">b</a>';
     const repeatedLinksContent = '<a href="a">a</a> <a href="a">b</a>';
@@ -47,10 +47,17 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['http://url.com/web/page'], $urls);
     }
 
-    public function testRelativeLinks()
+    public function testRelativeLinksAtRoot()
     {
         $extractor = new UrlExtractor();
         $urls = $extractor->extract(self::relativeLinksContent, self::urlRoot);
         $this->assertEquals(['http://url.com/web/page'], $urls);
+    }
+
+    public function testRelativeLinksNotAtRoot()
+    {
+        $extractor = new UrlExtractor();
+        $urls = $extractor->extract(self::relativeLinksContent, self::urlNotRoot);
+        $this->assertEquals(['http://url.com/some/web/page'], $urls);
     }
 }

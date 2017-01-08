@@ -10,7 +10,7 @@ class UrlExtractor
 
         $site = $parse['scheme'] . "://" . $parse['host'];
         
-        $path = $site . $parse['path'];
+        $path = $site . $this->getReferencePath($parse['path']);
 
         preg_match_all ("/a[\s]+[^>]*?href[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/", $content, $links);
 
@@ -35,5 +35,10 @@ class UrlExtractor
         }
 
         return array_unique($urls);
+    }
+
+    protected function getReferencePath($path)
+    {
+        return substr($path, 0, strrpos($path, '/') + 1);
     }
 }
