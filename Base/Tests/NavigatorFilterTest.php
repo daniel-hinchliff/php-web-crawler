@@ -13,9 +13,11 @@ class NavigatorFilterTest extends PHPUnit_Framework_TestCase
     public function testAddToQueueInvokedIfUrlNotFiltered()
     {
         $queue = $this->prophet->prophesize('Crawler\UrlsMemoryQueue');
+        $navigator = $this->prophet->prophesize('Crawler\Navigator');
         $fetcher = $this->prophet->prophesize('Crawler\Fetcher');
 
         $fetcher->fetch(self::url)->willReturn('<a href="pass">link</a>');
+        $navigator->filter([self::urlPass], self::url)->willReturn([self::urlPass]);
         $queue->processedUrl(self::url)->shouldBeCalled();
         $queue->addUrl(self::urlPass)->shouldBeCalled();
         $queue->getUrl()->willReturn(self::url, null);
@@ -32,7 +34,6 @@ class NavigatorFilterTest extends PHPUnit_Framework_TestCase
         $navigator = $this->prophet->prophesize('Crawler\Navigator');
         $fetcher = $this->prophet->prophesize('Crawler\Fetcher');
 
-        $queue->willBeConstructedWith([self::url]);
         $fetcher->fetch(self::url)->willReturn('<a href="fail">link</a>');
         $navigator->filter([self::urlFail], self::url)->willReturn([]);
         $queue->addUrl(self::urlFail)->shouldNotBeCalled();
