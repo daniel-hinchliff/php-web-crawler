@@ -51,13 +51,17 @@ class Crawler
 
     protected function processContent($url, $content)
     {
-        $this->processor->filter($url) &&
-        $this->processor->process($content, $url);
-        $urls = $this->url_extractor->extract($content, $url);
-
-        foreach ($this->navigator->filter($urls, $url) as $passed_url)
+        if ($this->processor->filter($url))
         {
-            $this->queue->addUrl($passed_url);
+            $this->processor->process($content, $url);
+        }
+
+        foreach ($this->url_extractor->extract($content, $url) as $link)
+        {
+            if($this->navigator->filter($link, $url))
+            {
+                $this->queue->addUrl($link);
+            }
         }
     }
 

@@ -17,7 +17,7 @@ class CrawlerNavigationTest extends PHPUnit_Framework_TestCase
         $fetcher = $this->prophet->prophesize('Crawler\Fetcher');
 
         $fetcher->fetch(self::url)->willReturn('<a href="pass">link</a>');
-        $navigator->filter([self::urlPass], self::url)->willReturn([self::urlPass]);
+        $navigator->filter(self::urlPass, self::url)->willReturn(true);
         $queue->processedUrl(self::url)->shouldBeCalled();
         $queue->addUrl(self::urlPass)->shouldBeCalled();
         $queue->getUrl()->willReturn(self::url, null);
@@ -35,7 +35,7 @@ class CrawlerNavigationTest extends PHPUnit_Framework_TestCase
         $fetcher = $this->prophet->prophesize('Crawler\Fetcher');
 
         $fetcher->fetch(self::url)->willReturn('<a href="fail">link</a>');
-        $navigator->filter([self::urlFail], self::url)->willReturn([]);
+        $navigator->filter(self::urlFail, self::url)->willReturn(false);
         $queue->addUrl(self::urlFail)->shouldNotBeCalled();
         $queue->processedUrl(self::url)->shouldBeCalled();
         $queue->getUrl()->willReturn(self::url, null);
