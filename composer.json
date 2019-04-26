@@ -2,8 +2,8 @@
   "name": "daniel-hinchliff/php-web-crawler",
   "description": "A simple web crawling framework",
   "require-dev": {
-      "phpspec/prophecy": "~1.0",
-      "phpunit/phpunit": "^5.0"
+      "phpspec/prophecy": "1.*",
+      "phpunit/phpunit": ">=6.0"
   },
   "autoload": {
     "psr-4": {

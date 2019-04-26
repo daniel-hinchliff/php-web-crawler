@@ -2,8 +2,14 @@
 
 use Crawler\Crawler;
 use Crawler\UrlsMemoryQueue;
+use PHPUnit\Framework\TestCase;
+use Prophecy\Prophet;
 
-class CrawlerProcessFilterTest extends PHPUnit_Framework_TestCase
+/**
+ * @property Prophet $prophet
+ */
+
+class CrawlerProcessFilterTest extends TestCase
 {
     private $prophet;
 
@@ -43,13 +49,14 @@ class CrawlerProcessFilterTest extends PHPUnit_Framework_TestCase
         $crawler->crawl(0);
     }
 
-    protected function setup()
+    protected function setUp(): void
     {
-        $this->prophet = new \Prophecy\Prophet;
+        $this->prophet = new Prophet;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->prophet->checkPredictions();
+        $this->assertTrue(true);
     }
 }

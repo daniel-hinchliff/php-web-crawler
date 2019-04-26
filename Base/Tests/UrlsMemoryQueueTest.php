@@ -1,8 +1,9 @@
 <?php
 
 use Crawler\UrlsMemoryQueue;
+use PHPUnit\Framework\TestCase;
 
-class UrlsMemoryQueueTest extends PHPUnit_Framework_TestCase
+class UrlsMemoryQueueTest extends TestCase
 {
     public function testEmptyQueue()
     {

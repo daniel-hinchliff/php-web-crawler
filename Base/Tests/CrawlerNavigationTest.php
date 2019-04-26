@@ -1,8 +1,14 @@
 <?php
 
 use Crawler\Crawler;
+use Prophecy\Prophet;
+use PHPUnit\Framework\TestCase;
 
-class CrawlerNavigationTest extends PHPUnit_Framework_TestCase
+/**
+ * @property Prophet $prophet
+ */
+
+class CrawlerNavigationTest extends TestCase
 {
     private $prophet;
 
@@ -47,13 +53,14 @@ class CrawlerNavigationTest extends PHPUnit_Framework_TestCase
         $crawler->crawl(0);
     }
 
-    protected function setup()
+    protected function setUp(): void
     {
-        $this->prophet = new \Prophecy\Prophet;
+        $this->prophet = new Prophet;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->prophet->checkPredictions();
+        $this->assertTrue(true);
     }
 }
