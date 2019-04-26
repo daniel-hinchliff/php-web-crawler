@@ -1,5 +1,5 @@
 {
-  "name": "daniel-hinchliff/php_web_crawler",
+  "name": "daniel-hinchliff/php-web-crawler",
   "description": "A simple web crawling framework",
   "require-dev": {
       "phpspec/prophecy": "~1.0",
